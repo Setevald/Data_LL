@@ -2,9 +2,9 @@ import java.util.Scanner;
 
 public class StudentDataMana {
     public static class Student{
-        private int id;
-        private String name;
-        private double grade;
+        int id;
+        String name;
+        double grade;
 
         public Student(int id, String name, double grade){
             this.id = id;
@@ -12,14 +12,28 @@ public class StudentDataMana {
             this.grade = grade;
         }
 
-        public int getId() {return id;}
-        public void SetId(int id) { this.id = id;}
+        public int getId() {
+            return id;
+        }
 
-        public String getName() { return name; }
-        public void SetName(String name) { this.name = name;}
+        public void SetId(int id) { 
+            this.id = id;
+        }
 
-        public Double getGrade() { return grade; }
-        public void SetGrade(Double grade) { this.grade = grade;}
+        public String getName() { 
+            return name; 
+        }
+        public void SetName(String name) { 
+            this.name = name;
+        }
+
+        public Double getGrade() { 
+            return grade; 
+        }
+
+        public void SetGrade(Double grade) { 
+            this.grade = grade;
+        }
 
         public String toString(){
             return "Student{" + "id=" + id + ",name="+ name + "grade = " +grade + '}';
@@ -27,23 +41,33 @@ public class StudentDataMana {
     }
 
     public static class Node {
-        private Student student;
-        private Node next;
+        Student student;
+        Node next;
 
         public Node(Student student){
             this.student = student;
             this.next = null;
         }
 
-        public Student getStudent() { return student; }
-        public void setStudent( Student student) { this.student = student;}
+        public Student getStudent() { 
+            return student; 
+        }
 
-        public Node getNext() { return next; }
-        public void setNext( Node next) { this.next = next;}
+        public void setStudent( Student student) { 
+            this.student = student;
+        }
+
+        public Node getNext() { 
+            return next; 
+        }
+
+        public void setNext( Node next) { 
+            this.next = next;
+        }
     }
 
     public static class StudentLinkedList{
-        private Node head;
+        Node head;
         
         public StudentLinkedList(){
             this.head = null;
@@ -152,13 +176,24 @@ public class StudentDataMana {
                     //Find student
                     System.out.println("Enter Student ID to find: ");
                     int findID =scanner.nextInt();
+                    long startTime = System.nanoTime(); //start timer
+                    Runtime runtime = Runtime.getRuntime(); //get the current runtime
+                    long usedMemoryBefore = runtime.totalMemory() - runtime.freeMemory(); //get the used memory before
+
                     Student student = studentList.findStudent(findID);
                     if (student != null) {
                         System.out.println("Student: "+ student);
                     } else {
                         System.out.println("Student haven't added yet.");
                         System.out.println("try again");
-                    } 
+                    }
+                        long endTime = System.nanoTime(); //Stop timer
+                        long duration = (endTime - startTime) / 1000000; //Convert to milleseconds
+                        long usedMemoryAfter = runtime.totalMemory() - runtime.freeMemory(); //Get the used memory after
+                        long allocatedMemory = usedMemoryAfter - usedMemoryBefore; //Calculate the allocated memory
+
+                        System.out.println("time taken to search student: "+ duration+" ms");
+                        System.out.print("Allocated Memory: "+ allocatedMemory+ " bytes"); 
                     break;
                 
                 case 5:
